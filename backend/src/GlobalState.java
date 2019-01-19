@@ -2,12 +2,16 @@ import GameExceptions.*;
 import java.util.*;
 
 public class GlobalState {
-    public Map<Integer, Map<CardType, Integer>> cardHands;
-    public List<CardType> deck;
-    public Map<CardType, Integer> discardPile;
-    public Map<Integer, Boolean> playersAlive;
+    public Integer currentPlayer; // Whose go is it?
+    public Integer maxPlayers; // How many players do we have?
+    public Map<Integer, Map<CardType, Integer>> cardHands; // What cards does each player have?
+    public List<CardType> deck; // What cards are in the deck?
+    public Map<CardType, Integer> discardPile; // What cards have been discarded?
+    public Map<Integer, Boolean> playersAlive; // Which players are still in the game?
 
     public GlobalState(Integer numPlayers){
+        currentPlayer = 0;
+        maxPlayers = numPlayers;
         cardHands = new HashMap<>();
         deck = new LinkedList<>();
         discardPile = new HashMap<>();
@@ -20,9 +24,11 @@ public class GlobalState {
 
     }
 
-    public IndividualState deriveIndividual(Integer playerID) throws InvalidPlayerIDException {
-        if (!cardHands.containsKey(playerID) || !playersAlive.containsKey(playerID) || playersAlive.get(playerID))
-            throw new InvalidPlayerIDException(playerID); // If the player doesn't exist, or is dead, return null.
+    public IndividualState deriveIndividual(Integer playerID) throws InvalidPlayerIDException, InvalidGameActionException {
+        if (playerID >= maxPlayers)
+            throw new InvalidPlayerIDException(playerID); // If the player doesn't exist.
+        else if (!playersAlive.get(playerID))
+            throw new InvalidGameActionException(); // If the player we're trying to run as is dead.
         return new IndividualState(discardPile,countCards(cardHands),cardHands.get(playerID),playersAlive,playerID);
     }
 
@@ -39,8 +45,13 @@ public class GlobalState {
     }
 
     private void killPlayer(Integer pID) throws InvalidPlayerIDException, InvalidGameActionException{
-        if (!playersAlive.containsKey(pID)) throw new InvalidPlayerIDException(pID);
-        if (!playersAlive.get(pID)) throw new InvalidGameActionException();
+        if (pID >= maxPlayers)
+            throw new InvalidPlayerIDException(pID); // Non-existent player
+        else if (!playersAlive.get(pID))
+            throw new InvalidGameActionException();  // Player already dead
+        playersAlive.put(pID, false);
     }
+
+
 
 }
