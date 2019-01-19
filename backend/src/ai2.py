@@ -6,19 +6,44 @@ class AI:
         self.cells = cells
         self.game = Game(self.cells)
 
-    def expectiMax(self, game, isPlayer):
+    def expectiMax(self, game, depth, isPlayer):
+        if depth == 0:
+            # evaluate stuff
+        previousState = game.cells
 
-        previousScore = self.score
-        previousState = self.cells
+        if isPlayer:
+            maxValue = -1
+            moved = False
 
-        left = Game(previousState).shiftLeft()
-        right = Game(previousState).shiftRight()
-        up = Game(previousState).shiftUp()
-        down = Game(previousState).shiftDown()
+            for i in range(4):
+                newGame = self.nextMove(previousState,i)
+                
+                value = self.expectiMax(newGame, depth - 1, not isPlayer)
+                maxValue = max(value, maxValue)
+        
+        else:
+            expectedValue = 0
+            availableCells = game.availableCells()
+            size = len(availableCells)
+            for i in range(size):
+                cells = previousState
+                cells[availableCells[i]] = 2
+                newGame = Game(cells)
+                expectedValue += (1.0 / size) * 0.9 * self.expectiMax(newGame, depth - 1, not isPlayer)
 
-        moveScores = [left.score, right.score, up.score, down.score]
+
 
         maxValue = max(moveScores)
         maxMove = moveScores.index(maxValue)
 
         return maxMove
+
+    def nextMove(previousState,direction):
+        if direction == 0:
+            return Game(previousState).shiftLeft()
+        elif direction == 1:
+            return Game(previousState).shiftRight()
+        elif direction == 2:
+            return Game(previousState).shiftUp()
+        else:
+            return Game(previousState).shiftDown()
