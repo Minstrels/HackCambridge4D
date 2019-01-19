@@ -9,5 +9,9 @@ public class Main {
     // use these probabilities to make a decision
     // transmit decision back to front end
 
+
+
+    ServerMaker.startServer(8000);
+
   }
 }

@@ -5,15 +5,16 @@ public class GlobalState {
     public Integer currentPlayer; // Whose go is it?
     public Integer maxPlayers; // How many players do we have?
     public Map<Integer, Map<CardType, Integer>> cardHands; // What cards does each player have?
-    public List<CardType> deck; // What cards are in the deck?
+    public Stack<CardType> deck; // What cards are in the deck?
     public Map<CardType, Integer> discardPile; // What cards have been discarded?
     public Map<Integer, Boolean> playersAlive; // Which players are still in the game?
+    public Map<Integer, CardType> lastDrawnCard;  // The last drawn card for each player
 
     public GlobalState(Integer numPlayers){
         currentPlayer = 0;
         maxPlayers = numPlayers;
         cardHands = new HashMap<>();
-        deck = new LinkedList<>();
+        deck = new Stack<>();
         discardPile = new HashMap<>();
         playersAlive = new HashMap<>();
 
@@ -44,7 +45,7 @@ public class GlobalState {
         return counts;
     }
 
-    private void killPlayer(Integer pID) throws InvalidPlayerIDException, InvalidGameActionException{
+    private void killPlayer(Integer pID) throws InvalidPlayerIDException, InvalidGameActionException {
         if (pID >= maxPlayers)
             throw new InvalidPlayerIDException(pID); // Non-existent player
         else if (!playersAlive.get(pID))
@@ -52,6 +53,21 @@ public class GlobalState {
         playersAlive.put(pID, false);
     }
 
-
-
+    public void takeAction(Decision d, int pid) {
+        Map<CardType, Integer> playersHand = cardHands.get(pid);
+        if (d.action.equals("pickup")) {
+            CardType card = deck.pop();
+            playersHand.put(card, playersHand.get(card) + 1);
+            lastDrawnCard.put(pid, card);
+        } else if (d.action.equals("shuffle")) {
+            playersHand.put(CardType.SHUFFLE, playersHand.get(CardType.SHUFFLE) - 1);
+            discardPile.put(CardType.SHUFFLE, discardPile.get(CardType.SHUFFLE) + 1);
+        } else if (d.action.equals("seefuture")) {
+            playersHand.put(CardType.SEEFUTURE, playersHand.get(CardType.SEEFUTURE) - 1);
+            discardPile.put(CardType.SEEFUTURE, discardPile.get(CardType.SEEFUTURE) + 1);
+        } else if (d.action.equals("defuse")) {
+            playersHand.put(CardType.DEFUSE, playersHand.get(CardType.DEFUSE) - 1);
+            discardPile.put(CardType.DEFUSE, discardPile.get(CardType.DEFUSE) + 1);
+        }
+    }
 }
