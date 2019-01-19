@@ -19,4 +19,24 @@ public class GlobalState {
 
     }
 
+    public IndividualState deriveIndividual(Integer playerID){
+        if (!cardHands.containsKey(playerID) || !playersAlive.containsKey(playerID))
+            return null; // If the player doesn't exist, return null.
+        else if (!playersAlive.get(playerID))
+            return null; // If the player is dead, return null.
+        return new IndividualState(discardPile,countCards(cardHands),cardHands.get(playerID),playersAlive,playerID);
+    }
+
+    private Map<Integer, Integer> countCards(Map<Integer, Map<String, Integer>> hands) {
+        Map<Integer, Integer> counts = new HashMap<>();
+        for (Integer i : hands.keySet()) {
+            Integer total = 0;
+            for (Integer j : hands.get(i).values()) {
+                total += j;
+            }
+            counts.put(i, total);
+        }
+        return counts;
+    }
+
 }
