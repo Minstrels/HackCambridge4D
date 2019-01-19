@@ -1,13 +1,22 @@
+import random
+
 class Game:
     def __init__(self):
         self.cells = [[0 for _ in range(4)] for _ in range(4)]
         self.score = 0
+        self.min = 0
+        self.max = 4
 
     def copy(self):
         g = Game()
         g.cells = [row[:] for row in self.cells]
         g.score = self.score
         return g
+
+    def newGame(self):
+        # Initialise the game state
+        self.addValue()
+        self.addValue()
 
     @staticmethod
     def tighten(row):
@@ -64,7 +73,17 @@ class Game:
         self.cells = self.transpose(self.cells)
 
     def addValue(self):
-        pass
+        x = random.randint(self.min, self.max - 1)
+        y = random.randint(self.min, self.max - 1)
+
+        while self.cells[y][x] != 0:
+            x = random.randint(self.min, self.max - 1)
+            y = random.randint(self.min, self.max - 1)
+
+        if random.random() > 0.9:
+            self.cells[y][x] = 4
+        else:
+            self.cells[y][x] = 2
 
     def serialize(self):
         return {'squares': self.cells, 'score': self.score}
