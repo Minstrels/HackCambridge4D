@@ -5,32 +5,56 @@ import Grid from './Grid.js';
 
 class App extends Component {
 
+  constructor() {
+    super();
+
+    this.state = {
+      score: 0,
+      cells: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+    };
+  }
+
+  sendAction(action) {
+    fetch('http://localhost:5000/play/'+action)
+      .then((response) => (response.json()))
+      .then((jsonData) => {
+        this.setState({...this.state,
+          score: jsonData.gameState.score,
+          cells: jsonData.gameState.squares
+        })
+      });
+  }
+
   handleKeyPress(event) {
     if (event.keyCode === 37) {
-      console.log("Left");
+      this.sendAction("left");
     }
     else if (event.keyCode === 38) {
-      console.log("Up");
+      this.sendAction("up");
     }
     else if (event.keyCode === 39) {
-      console.log("Right");
+      this.sendAction("right");
     }
     else if (event.keyCode === 40) {
-      console.log("Down");
+      this.sendAction("down");
     }
   }
 
+  componentWillMount() {
+    this.sendAction("new");
+  }
+
   componentDidMount(){
-    document.addEventListener("keydown", this.handleKeyPress, false);
+    document.addEventListener("keydown", (event) => this.handleKeyPress(event), false);
   }
   componentWillUnmount(){
-    document.removeEventListener("keydown", this.handleKeyPress, false);
+    document.removeEventListener("keydown", (event) => this.handleKeyPress(event), false);
   }
 
   render() {
     return (
-      <div className="App" onKeyPress={(event) => this.handleKeyPress(event)}>
-        <Grid cells={[[1024,512,32,2],[2048,8,128,64],[0,2,16,256],[4,2,4,2]]} cellSize={"14vh"} />
+      <div className="App">
+        <Grid cells={this.state.cells} cellSize={"14vh"} />
       </div>
     );
   }
