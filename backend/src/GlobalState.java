@@ -1,3 +1,4 @@
+import GameExceptions.*;
 import java.util.*;
 
 public class GlobalState {
@@ -19,11 +20,9 @@ public class GlobalState {
 
     }
 
-    public IndividualState deriveIndividual(Integer playerID){
-        if (!cardHands.containsKey(playerID) || !playersAlive.containsKey(playerID))
-            return null; // If the player doesn't exist, return null.
-        else if (!playersAlive.get(playerID))
-            return null; // If the player is dead, return null.
+    public IndividualState deriveIndividual(Integer playerID) throws InvalidPlayerIDException {
+        if (!cardHands.containsKey(playerID) || !playersAlive.containsKey(playerID) || playersAlive.get(playerID))
+            throw new InvalidPlayerIDException(playerID); // If the player doesn't exist, or is dead, return null.
         return new IndividualState(discardPile,countCards(cardHands),cardHands.get(playerID),playersAlive,playerID);
     }
 
@@ -37,6 +36,11 @@ public class GlobalState {
             counts.put(i, total);
         }
         return counts;
+    }
+
+    private void killPlayer(Integer pID) throws InvalidPlayerIDException, InvalidGameActionException{
+        if (!playersAlive.containsKey(pID)) throw new InvalidPlayerIDException(pID);
+        if (!playersAlive.get(pID)) throw new InvalidGameActionException();
     }
 
 }
