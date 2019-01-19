@@ -1,4 +1,8 @@
 .App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
   text-align: center;
 }
 
@@ -7,19 +11,25 @@
   height: 40vmin;
 }
 
-.App-header {
+.App-top-panes {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+
   font-size: calc(10px + 2vmin);
   color: white;
+
+  height: 60vh;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.App-bottom-panes {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
 }
 
 @keyframes App-logo-spin {
