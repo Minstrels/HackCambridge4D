@@ -1,8 +1,11 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
+
 
 from game import *
 
 app = Flask(__name__)
+CORS(app)
 game = None
 
 @app.route("/play/<action>")
