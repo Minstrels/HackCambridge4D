@@ -18,7 +18,7 @@ def getState(action):
         game.checkGameOver()
         if game.game_over:
             return jsonify({'gameState': game.serialize()})
-            
+
         oldGame = game.copy()
         if action == 'left':
             game.shiftLeft()
@@ -30,6 +30,8 @@ def getState(action):
             game.shiftUp()
         if not oldGame.equal(game):
             game.addValue()
+    game.checkGameOver()
+
     return jsonify({'gameState': game.serialize()})
 
 
