@@ -26,7 +26,7 @@ class Game:
         self.addValue()
         self.addValue()
 
-    def possibilties(self, n):
+    def possibilities(self, n):
         for y in range(self.min, self.max):
             for x in range(self.min, self.max):
                 if self.cells[y][x] == 0:
@@ -78,21 +78,25 @@ class Game:
 
     def shiftLeft(self):
         self.cells = [self.move_left(row) for row in self.cells]
+        return self
 
     def shiftRight(self):
         self.cells = self.reflect_vertical(self.cells)
         self.shiftLeft()
         self.cells = self.reflect_vertical(self.cells)
+        return self
 
     def shiftUp(self):
         self.cells = self.transpose(self.cells)
         self.shiftLeft()
         self.cells = self.transpose(self.cells)
+        return self
 
     def shiftDown(self):
         self.cells = self.transpose(self.cells)
         self.shiftRight()
         self.cells = self.transpose(self.cells)
+        return self
 
     def addValue(self):
         x = random.randint(self.min, self.max - 1)
