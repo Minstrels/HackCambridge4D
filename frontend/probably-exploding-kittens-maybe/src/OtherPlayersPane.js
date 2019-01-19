@@ -1,30 +1,49 @@
 import React, { Component } from 'react';
 import './OtherPlayersPane.css';
 
+const cardWidth = 40;
+const cardOffset = 16;
+
 const Card = (props) => (
   <div style={{
-    height: "70px",
-    width: "40px",
+    height: Math.floor(cardWidth * 7/4) + "px",
+    width: cardWidth + "px",
     backgroundColor: "#686c74",
     border: "4px solid #4c5675",
-    borderRadius: "8px"
+    borderRadius: "8px",
+    zIndex: props.index,
+    position: "absolute",
+    left: Math.floor(props.index * cardOffset) + "px"
   }} />
 );
 
 class OtherPlayersPane extends Component {
 
+  generateCards(nCards) {
+    let cards = [];
+
+    for (let i = 0; i < nCards; ++i) {
+      cards.push(<Card index={i} />);
+    }
+
+    return cards;
+  }
+
   render() {
     return (
       <div className="OtherPlayersPane">
-        {this.props.playerData.map((p) => (
-          <div className="OtherPlayersPane-player">
-            <label>{p.name}</label>
-            <label>{p.nCards} cards</label>
-            <div style={{display: "flex", flexDirection: "row"}}>
-              {[<Card />, <Card />]}
+        {this.props.playerData.map((p) => {
+          let offset = Math.floor((cardWidth + (cardOffset * (p.nCards-1))) / 2);
+
+          return (
+            <div className="OtherPlayersPane-player">
+              <label style={{marginBottom: "60px"}}>{p.name}</label>
+              <div style={{position: "relative", left: "-" + offset + "px"}}>
+                {this.generateCards(p.nCards)}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     );
   }
