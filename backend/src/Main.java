@@ -1,7 +1,7 @@
 
 public class Main {
 
-  public static void main(args: String[]) {
+  public static void main(String[] args) {
     // connect to front end app
     //  receive a move from front end
     // update our internal state
