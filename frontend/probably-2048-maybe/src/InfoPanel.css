@@ -6,12 +6,12 @@
   align-items: center;
 
   width: 20vw;
-  height: 20vh;
+  height: 24vh;
 
   border: 5px solid black;
 }
 
-.InfoPanel-score-label {
+.InfoPanel-label {
   font-size: 46px;
   font-weight: bold;
 }

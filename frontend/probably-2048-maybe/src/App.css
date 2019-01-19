@@ -1,12 +1,40 @@
 .App {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
+  justify-content: space-between;
 
   width: 100vw;
   height: 100vh;
+}
+
+.App-title-div {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: stretch;
+
+  background-color: #e80;
+  padding: 5vh;
+}
+
+.App-title {
+  align-self: center;
+
+  font-size: 46px;
+  font-weight: bold;
+  color: white;
+}
+
+.App-main-panels {
+  display: flex;
+  flex-direction: row;
 
   justify-content: space-around;
   align-items: center;
+
+  margin-bottom: 10vh;
 }
 
 button {
