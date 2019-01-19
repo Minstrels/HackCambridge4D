@@ -34,6 +34,11 @@ class Game:
                     yield self
                     self.cells[y][x] = 0
 
+    def possibleMoves(self):
+        return [(self.copy().shiftLeft(), 'left'), (self.copy().shiftRight(), 'right'),
+                (self.copy().shiftDown(), 'down'), (self.copy().shiftUp(), 'up')]
+
+
     @staticmethod
     def tighten(row):
         new_row = [i for i in row if i != 0]
