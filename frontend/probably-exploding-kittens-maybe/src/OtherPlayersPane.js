@@ -4,7 +4,7 @@ import './OtherPlayersPane.css';
 const cardWidth = 40;
 const cardOffset = 16;
 
-const Card = (props) => (
+const HiddenCard = (props) => (
   <div style={{
     height: Math.floor(cardWidth * 7/4) + "px",
     width: cardWidth + "px",
@@ -23,7 +23,7 @@ class OtherPlayersPane extends Component {
     let cards = [];
 
     for (let i = 0; i < nCards; ++i) {
-      cards.push(<Card index={i} />);
+      cards.push(<HiddenCard key={i} index={i} />);
     }
 
     return cards;
@@ -32,12 +32,12 @@ class OtherPlayersPane extends Component {
   render() {
     return (
       <div className="OtherPlayersPane">
-        {this.props.playerData.map((p) => {
+        {this.props.playerData.map((p, i) => {
           let offset = Math.floor((cardWidth + (cardOffset * (p.nCards-1))) / 2);
 
           return (
-            <div className="OtherPlayersPane-player">
-              <label style={{marginBottom: "60px"}}>{p.name}</label>
+            <div key={i} className="OtherPlayersPane-player">
+              <label style={{marginBottom: "36px"}}>{p.name}</label>
               <div style={{position: "relative", left: "-" + offset + "px"}}>
                 {this.generateCards(p.nCards)}
               </div>

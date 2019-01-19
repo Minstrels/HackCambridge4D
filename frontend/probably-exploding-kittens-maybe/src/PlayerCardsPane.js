@@ -10,7 +10,7 @@ class PlayerCardsPane extends Component {
       <div className="PlayerCardsPane">
         <label className="PlayerCardsPane-title">Your Cards</label>
 
-        <div className="PlayerCardsPane-cards-pane">{this.props.cards.map((c) => <Card name={c} />)}</div>
+        <div className="PlayerCardsPane-cards-pane">{this.props.cards.map((c, i) => <Card key={i} name={c} onPlayCard={this.props.onPlayCard} />)}</div>
       </div>
     );
   }
