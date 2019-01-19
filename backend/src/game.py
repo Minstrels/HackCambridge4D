@@ -1,17 +1,20 @@
 class Game:
-    cells= [[0 for _ in range(4)] for _ in range(4)]
+    cells = [[0 for _ in range(4)] for _ in range(4)]
 
-    def shiftLeft():
+    def shiftLeft(self):
         pass
 
-    def shiftRight():
+    def shiftRight(self):
         pass
 
-    def shiftUp():
+    def shiftUp(self):
         pass
 
-    def shiftDown():
+    def shiftDown(self):
         pass
 
-    def addValue():
+    def addValue(self):
         pass
+
+    def serialize(self):
+        return self.cells
