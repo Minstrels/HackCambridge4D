@@ -7,19 +7,17 @@ class AI:
         self.game = Game(self.cells)
 
     def expectiMax(self, game, depth, isPlayer):
-        if depth == 0:
-            # evaluate stuff
         previousState = game.cells
+        if depth == 0:
+            return game.score()
 
         if isPlayer:
             maxValue = -1
-            moved = False
-
             for i in range(4):
                 newGame = self.nextMove(previousState,i)
-                
-                value = self.expectiMax(newGame, depth - 1, not isPlayer)
-                maxValue = max(value, maxValue)
+                value = self.expectiMax(newGame, depth, not isPlayer)
+                maxValue = max(value,maxValue)
+
         
         else:
             expectedValue = 0
@@ -30,15 +28,14 @@ class AI:
                 cells[availableCells[i]] = 2
                 newGame = Game(cells)
                 expectedValue += (1.0 / size) * 0.9 * self.expectiMax(newGame, depth - 1, not isPlayer)
+                
+                cells[availableCells[i]] = 4
+                newGame = Game(cells)
+                expectedValue += (1.0 / size) * 0.1 * self.expectiMax(newGame, depth - 1, not isPlayer)
+            
+            return expectedValue
 
-
-
-        maxValue = max(moveScores)
-        maxMove = moveScores.index(maxValue)
-
-        return maxMove
-
-    def nextMove(previousState,direction):
+    def nextMove(self,previousState,direction):
         if direction == 0:
             return Game(previousState).shiftLeft()
         elif direction == 1:
