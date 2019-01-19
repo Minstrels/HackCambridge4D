@@ -26,6 +26,14 @@ class Game:
         self.addValue()
         self.addValue()
 
+    def possibilties(self, n):
+        for y in range(self.min, self.max):
+            for x in range(self.min, self.max):
+                if self.cells[y][x] == 0:
+                    self.cells[y][x] = n
+                    yield self
+                    self.cells[y][x] = 0
+
     @staticmethod
     def tighten(row):
         new_row = [i for i in row if i != 0]
