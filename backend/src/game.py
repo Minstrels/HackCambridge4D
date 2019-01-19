@@ -90,7 +90,7 @@ class Game:
             self.cells[y][x] = 2
 
     def serialize(self):
-        return {'squares': self.cells, 'score': self.score, 'game_over': self.score}
+        return {'squares': self.cells, 'score': self.score, 'game_over': self.game_over}
 
     def checkGameOver(self):
         g = self.copy()
