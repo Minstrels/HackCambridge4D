@@ -1,0 +1,17 @@
+.InfoPanel {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 20vw;
+  height: 20vh;
+
+  border: 5px solid black;
+}
+
+.InfoPanel-score-label {
+  font-size: 46px;
+  font-weight: bold;
+}
