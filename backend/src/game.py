@@ -99,7 +99,27 @@ class Game:
         return {'squares': self.cells, 'score': self.score, 'game_over': self.game_over}
 
     def checkGameOver(self):
-        return self.available_cells == 0
+        g = self.copy()
+        g.shiftLeft()
+        if not g.equal(self):
+            self.game_over = False
+            return
+        g = self.copy()
+        g.shiftDown()
+        if not g.equal(self):
+            self.game_over = False
+            return
+        g = self.copy()
+        g.shiftUp()
+        if not g.equal(self):
+            self.game_over = False
+            return
+        g = self.copy()
+        g.shiftDown()
+        if not g.equal(self):
+            self.game_over = False
+            return
+        self.game_over = True
 
 if __name__ == '__main__':
     g = Game()
