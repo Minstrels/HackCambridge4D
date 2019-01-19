@@ -1,6 +1,13 @@
 class Game:
     def __init__(self):
         self.cells = [[0 for _ in range(4)] for _ in range(4)]
+        self.score = 0
+
+    def copy(self):
+        g = Game()
+        g.cells = [row[:] for row in self.cells]
+        g.score = self.score
+        return g
 
     @staticmethod
     def tighten(row):
@@ -8,14 +15,13 @@ class Game:
         new_row += [0 for i in range(len(row) - len(new_row))]
         return new_row
 
-    @staticmethod
-    def merge(row):
+    def merge(self, row):
         pair = False
         new_row = []
         for i in range(len(row)):
             if pair:
                 new_row.append(2 * row[i])
-                #self.score += 2 * row[i]
+                self.score += 2 * row[i]
                 pair = False
             else:
                 try:
@@ -28,9 +34,8 @@ class Game:
                     new_row.append(row[i])
         return new_row
 
-    @staticmethod
-    def move_left(row):
-        return Game.tighten(Game.merge(Game.tighten(row)))
+    def move_left(self, row):
+        return self.tighten(self.merge(self.tighten(row)))
 
     @staticmethod
     def reflect_vertical(cells):
@@ -62,7 +67,7 @@ class Game:
         pass
 
     def serialize(self):
-        return self.cells
+        return {'squares': self.cells, 'score': self.score}
 
 
 if __name__ == '__main__':
@@ -73,4 +78,5 @@ if __name__ == '__main__':
                [4, 2, 2, 4]]
     g.shiftDown()
 
+    print(g.score)
     print(g.cells)
