@@ -3,6 +3,7 @@ import './App.css';
 
 import Grid from './Grid.js';
 import InfoPanel from './InfoPanel.js';
+import HintPanel from './HintPanel.js';
 
 class App extends Component {
 
@@ -79,10 +80,10 @@ class App extends Component {
         </div>
 
         <div className="App-main-panels">
-          <div style={{width: "20vw", border: "5px solid white"}} />
+          <HintPanel recommendedDirection={this.state.recommendedDirection} />
           <Grid cells={this.state.cells} cellSize={"14vh"} />
           <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <InfoPanel score={this.state.score} gameOver={this.state.gameOver} recommendedDirection={this.state.recommendedDirection} />
+            <InfoPanel score={this.state.score} gameOver={this.state.gameOver} />
             <button className="button" onClick={() => this.sendAction("new")}>New Game</button>
           </div>
         </div>
