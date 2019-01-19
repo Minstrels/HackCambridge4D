@@ -2,6 +2,11 @@
 # Created by https://www.gitignore.io/api/node,java
 # Edit at https://www.gitignore.io/?templates=node,java
 
+### EXTRAS ###
+.DS_Store
+frontend/probably-2048-maybe/node_modules/
+
+
 ### Java ###
 # Compiled class file
 *.class
