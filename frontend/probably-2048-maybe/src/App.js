@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Grid from './Grid.js';
+import InfoPanel from './InfoPanel.js';
 
 class App extends Component {
 
@@ -10,7 +11,8 @@ class App extends Component {
 
     this.state = {
       score: 0,
-      cells: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+      cells: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],
+      gameOver: false
     };
   }
 
@@ -20,7 +22,8 @@ class App extends Component {
       .then((jsonData) => {
         this.setState({...this.state,
           score: jsonData.gameState.score,
-          cells: jsonData.gameState.squares
+          cells: jsonData.gameState.squares,
+          gameOver: jsonData.gameState.game_over
         })
       });
   }
@@ -54,7 +57,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <div style={{width: "20vw", border: "5px solid white"}} />
         <Grid cells={this.state.cells} cellSize={"14vh"} />
+        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+          <InfoPanel score={this.state.score} gameOver={this.state.gameOver} />
+          <button className="button" onClick={() => this.sendAction("new")}>New Game</button>
+        </div>
       </div>
     );
   }

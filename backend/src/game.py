@@ -7,6 +7,10 @@ class Game:
         self.min = 0
         self.max = 4
         self.game_over = False
+        self.available_cells = (self.min - self.max) ** 2
+
+    def availableCells(self):
+        return self.available_cells
 
     def copy(self):
         g = Game()
@@ -40,6 +44,7 @@ class Game:
                 try:
                     if row[i] == row[i+1]:
                         pair = True
+                        self.available_cells += 1
                         new_row.append(0)
                     else:
                         new_row.append(row[i])
@@ -79,6 +84,7 @@ class Game:
     def addValue(self):
         x = random.randint(self.min, self.max - 1)
         y = random.randint(self.min, self.max - 1)
+        self.available_cells -= 1
 
         while self.cells[y][x] != 0:
             x = random.randint(self.min, self.max - 1)
@@ -93,27 +99,7 @@ class Game:
         return {'squares': self.cells, 'score': self.score, 'game_over': self.game_over}
 
     def checkGameOver(self):
-        g = self.copy()
-        g.shiftLeft()
-        if not g.equal(self):
-            self.game_over = False
-            return
-        g = self.copy()
-        g.shiftDown()
-        if not g.equal(self):
-            self.game_over = False
-            return
-        g = self.copy()
-        g.shiftUp()
-        if not g.equal(self):
-            self.game_over = False
-            return
-        g = self.copy()
-        g.shiftDown()
-        if not g.equal(self):
-            self.game_over = False
-            return
-        self.game_over = True
+        return self.available_cells == 0
 
 if __name__ == '__main__':
     g = Game()
