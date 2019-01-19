@@ -3,6 +3,7 @@ import './App.css';
 
 import Grid from './Grid.js';
 import InfoPanel from './InfoPanel.js';
+import HintPanel from './HintPanel.js';
 
 class App extends Component {
 
@@ -12,8 +13,24 @@ class App extends Component {
     this.state = {
       score: 0,
       cells: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],
-      gameOver: false
+      gameOver: false,
+      recommendedDirection: "Up"
     };
+  }
+
+  getDirectionString(directionVal) {
+    if (45 <= directionVal && directionVal < 135) {
+      return "Right";
+    }
+    else if (135 <= directionVal && directionVal < 225) {
+      return "Down";
+    }
+    else if (225 <= directionVal && directionVal < 315) {
+      return "Left";
+    }
+    else {
+      return "Up";
+    }
   }
 
   sendAction(action) {
@@ -23,7 +40,8 @@ class App extends Component {
         this.setState({...this.state,
           score: jsonData.gameState.score,
           cells: jsonData.gameState.squares,
-          gameOver: jsonData.gameState.game_over
+          gameOver: jsonData.gameState.game_over,
+          recommendedDirection: this.getDirectionString(jsonData.gameState.direction)
         })
       });
   }
@@ -57,11 +75,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div style={{width: "20vw", border: "5px solid white"}} />
-        <Grid cells={this.state.cells} cellSize={"14vh"} />
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-          <InfoPanel score={this.state.score} gameOver={this.state.gameOver} />
-          <button className="button" onClick={() => this.sendAction("new")}>New Game</button>
+        <div className="App-title-div">
+          <label className="App-title">Probably 2048, Maybe?</label>
+        </div>
+
+        <div className="App-main-panels">
+          <HintPanel recommendedDirection={this.state.recommendedDirection} />
+          <Grid cells={this.state.cells} cellSize={"14vh"} />
+          <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <InfoPanel score={this.state.score} gameOver={this.state.gameOver} />
+            <button className="button" onClick={() => this.sendAction("new")}>New Game</button>
+          </div>
         </div>
       </div>
     );

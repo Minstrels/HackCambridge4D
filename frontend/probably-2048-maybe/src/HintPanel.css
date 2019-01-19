@@ -1,4 +1,4 @@
-.InfoPanel {
+.HintPanel {
   display: flex;
   flex-direction: column;
 
@@ -9,9 +9,11 @@
   height: 20vh;
 
   border: 5px solid black;
+
+  margin-bottom: 94px;
 }
 
-.InfoPanel-label {
+.HintPanel-label {
   font-size: 46px;
   font-weight: bold;
 }
