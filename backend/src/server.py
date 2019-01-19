@@ -3,10 +3,13 @@ from flask_cors import CORS
 
 
 from game import *
+from ai2 import *
 
 app = Flask(__name__)
 CORS(app)
 game = None
+
+degs = {'left': 270, 'up': 0, 'right': 90, 'down': 180}
 
 @app.route("/play/<action>")
 def getState(action):
@@ -30,9 +33,11 @@ def getState(action):
             game.shiftUp()
         if not oldGame.equal(game):
             game.addValue()
-    game.checkGameOver()
 
-    return jsonify({'gameState': game.serialize()})
+    game.checkGameOver()
+    move = expectiMax(game, 3, True)[1]
+
+    return jsonify({'gameState': game.serialize(), 'direction': degs[move]})
 
 
 if __name__ == '__main__':
