@@ -6,6 +6,7 @@ class Game:
         self.score = 0
         self.min = 0
         self.max = 4
+        self.game_over = False
 
     def copy(self):
         g = Game()
@@ -89,8 +90,30 @@ class Game:
             self.cells[y][x] = 2
 
     def serialize(self):
-        return {'squares': self.cells, 'score': self.score}
+        return {'squares': self.cells, 'score': self.score, 'game_over': self.score}
 
+    def checkGameOver(self):
+        g = self.copy()
+        g.shiftLeft()
+        if not g.equal(self):
+            self.game_over = False
+            return
+        g = self.copy()
+        g.shiftDown()
+        if not g.equal(self):
+            self.game_over = False
+            return
+        g = self.copy()
+        g.shiftUp()
+        if not g.equal(self):
+            self.game_over = False
+            return
+        g = self.copy()
+        g.shiftDown()
+        if not g.equal(self):
+            self.game_over = False
+            return
+        self.game_over = True
 
 if __name__ == '__main__':
     g = Game()
