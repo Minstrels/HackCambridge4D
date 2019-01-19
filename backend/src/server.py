@@ -15,6 +15,7 @@ def getState(action):
         game = Game()
         game.newGame()
     else:
+        oldGame = game.copy()
         if action == 'left':
             game.shiftLeft()
         elif action == 'right':
@@ -23,7 +24,8 @@ def getState(action):
             game.shiftDown()
         elif action == 'up':
             game.shiftUp()
-        game.addValue()
+        if not oldGame.equal(game):
+            game.addValue()
     return jsonify({'gameState': game.serialize()})
 
 

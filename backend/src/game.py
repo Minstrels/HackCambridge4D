@@ -13,6 +13,9 @@ class Game:
         g.score = self.score
         return g
 
+    def equal(self, other):
+        return self.cells == other.cells
+
     def newGame(self):
         # Initialise the game state
         self.addValue()
