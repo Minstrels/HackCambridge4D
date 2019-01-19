@@ -26,6 +26,14 @@ class Game:
         self.addValue()
         self.addValue()
 
+    def possibilties(self, n):
+        for y in range(self.min, self.max):
+            for x in range(self.min, self.max):
+                if self.cells[y][x] == 0:
+                    self.cells[y][x] = n
+                    yield self
+                    self.cells[y][x] = 0
+
     @staticmethod
     def tighten(row):
         new_row = [i for i in row if i != 0]
@@ -99,7 +107,27 @@ class Game:
         return {'squares': self.cells, 'score': self.score, 'game_over': self.game_over}
 
     def checkGameOver(self):
-        return self.available_cells == 0
+        g = self.copy()
+        g.shiftLeft()
+        if not g.equal(self):
+            self.game_over = False
+            return
+        g = self.copy()
+        g.shiftDown()
+        if not g.equal(self):
+            self.game_over = False
+            return
+        g = self.copy()
+        g.shiftUp()
+        if not g.equal(self):
+            self.game_over = False
+            return
+        g = self.copy()
+        g.shiftDown()
+        if not g.equal(self):
+            self.game_over = False
+            return
+        self.game_over = True
 
 if __name__ == '__main__':
     g = Game()
