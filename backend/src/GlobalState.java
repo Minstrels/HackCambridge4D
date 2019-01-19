@@ -2,9 +2,9 @@ import GameExceptions.*;
 import java.util.*;
 
 public class GlobalState {
-    public Map<Integer, Map<String, Integer>> cardHands;
-    public List<String> deck;
-    public Map<String, Integer> discardPile;
+    public Map<Integer, Map<CardType, Integer>> cardHands;
+    public List<CardType> deck;
+    public Map<CardType, Integer> discardPile;
     public Map<Integer, Boolean> playersAlive;
 
     public GlobalState(Integer numPlayers){
@@ -26,7 +26,7 @@ public class GlobalState {
         return new IndividualState(discardPile,countCards(cardHands),cardHands.get(playerID),playersAlive,playerID);
     }
 
-    private Map<Integer, Integer> countCards(Map<Integer, Map<String, Integer>> hands) {
+    private Map<Integer, Integer> countCards(Map<Integer, Map<CardType, Integer>> hands) {
         Map<Integer, Integer> counts = new HashMap<>();
         for (Integer i : hands.keySet()) {
             Integer total = 0;
