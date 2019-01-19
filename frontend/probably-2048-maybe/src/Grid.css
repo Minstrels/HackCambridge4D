@@ -1,0 +1,9 @@
+.Grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.Grid-row {
+  display: flex;
+  flex-direction: row;
+}
