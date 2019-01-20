@@ -7,7 +7,7 @@ class Game:
         self.min = 0
         self.max = 4
         self.game_over = False
-        self.available_cells = (self.min - self.max) ** 2
+        self.available_cells = (self.max - self.min) ** 2
 
     def availableCells(self):
         return self.available_cells
@@ -31,7 +31,9 @@ class Game:
             for x in range(self.min, self.max):
                 if self.cells[y][x] == 0:
                     self.cells[y][x] = n
+                    self.available_cells -= 1
                     yield self
+                    self.available_cells += 1
                     self.cells[y][x] = 0
 
     def possibleMoves(self):
@@ -116,27 +118,7 @@ class Game:
         return {'squares': self.cells, 'score': self.score, 'game_over': self.game_over}
 
     def checkGameOver(self):
-        g = self.copy()
-        g.shiftLeft()
-        if not g.equal(self):
-            self.game_over = False
-            return
-        g = self.copy()
-        g.shiftDown()
-        if not g.equal(self):
-            self.game_over = False
-            return
-        g = self.copy()
-        g.shiftUp()
-        if not g.equal(self):
-            self.game_over = False
-            return
-        g = self.copy()
-        g.shiftDown()
-        if not g.equal(self):
-            self.game_over = False
-            return
-        self.game_over = True
+        return self.availableCells == 0
 
 if __name__ == '__main__':
     g = Game()

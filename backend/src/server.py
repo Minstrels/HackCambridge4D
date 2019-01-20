@@ -11,9 +11,14 @@ game = None
 
 degs = {'left': 270, 'up': 0, 'right': 90, 'down': 180}
 
+@app.route("/play")
+def showState():
+    return jsonify({'gameState': game.serialize(), 'direction': degs[move]})
+
 @app.route("/play/<action>")
 def getState(action):
     global game
+    print(game.availableCells)
     if action == 'new':
         game = Game()
         game.newGame()
