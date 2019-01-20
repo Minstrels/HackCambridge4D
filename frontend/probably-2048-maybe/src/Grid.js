@@ -32,7 +32,7 @@ function getColourForCellValue(val) {
     case 11:
       return "#ff5000";
     default:
-      return "#000";
+      return "#dd0060";
   }
 }
 
