@@ -22,7 +22,6 @@ def getState(action):
         game = Game()
         game.newGame()
     else:
-        print(game.availableCells())
 
         game.checkGameOver()
         if game.game_over:

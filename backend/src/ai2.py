@@ -2,9 +2,25 @@ import random
 
 from game import *
 
+def edgeHeuristic(game):
+    edgeSum = sum(game.cells[0]) + sum(game.cells[3]) + \
+              sum([game.cells[y][0] for y in range(4)]) + \
+              sum([game.cells[y][3] for y in range(4)]) / 4
+    return edgeSum
+
+def cornerHeuristic(game):
+    return (game.cells[0][0] + game.cells[3][0] + game.cells[0][3] + game.cells[3][3]) / 2
+
+def emptySquares(game):
+    emptySum = len([y for (y, x) in zip(range(4), range(4)) if game.cells[y][x] == 0])
+    return emptySum
+
+def h(game):
+    return edgeHeuristic(game) + emptySquares(game)
+
 def expectiMax(game, depth, isPlayer):
     if depth == 0 or game.availableCells() == 0:
-        return game.score,-1
+        return game.score + h(game),-1
 
     if isPlayer:
         maxValue = -1
