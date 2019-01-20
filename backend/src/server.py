@@ -42,6 +42,7 @@ def getState(action):
     game.checkGameOver()
     move, probabilities = expectiMax(game, 3, True)[1:3]
     normalise_const = sum(probabilities.values())
+    normalise_const += 0.000000001
     print(probabilities)
     probabilities = [probabilities['up']/normalise_const, probabilities['right']/normalise_const, probabilities['down']/normalise_const, probabilities['left']/normalise_const] 
 
