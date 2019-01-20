@@ -39,7 +39,7 @@ class Game:
                     self.cells[y][x] = 0
 
     def possibleMoves(self):
-        return filter(lambda x: not x.equal(self),
+        return filter(lambda x: not x[0].equal(self),
                       [(self.copy().shiftLeft(), 'left'), (self.copy().shiftRight(), 'right'),
                        (self.copy().shiftDown(), 'down'), (self.copy().shiftUp(), 'up')])
 
