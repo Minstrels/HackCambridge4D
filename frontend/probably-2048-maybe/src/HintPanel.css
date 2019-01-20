@@ -37,6 +37,9 @@
 }
 
 .HintPanel-best-move-label {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: bold;
+
+  width: 80px;
+  text-align: center;
 }

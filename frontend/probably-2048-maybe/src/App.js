@@ -14,7 +14,7 @@ class App extends Component {
       score: 0,
       cells: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],
       gameOver: false,
-      recommendedDirections: [0,0,0,0],
+      recommendedDirections: [0.25,0.25,0.25,0.25],
       autoPlayEnabled: false
     };
   }
@@ -98,8 +98,9 @@ class App extends Component {
             }}>New Game</button>
             <button className="button"
               onClick={() => {
+                let newAutoPlayEnabled = !this.state.autoPlayEnabled;
                 this.setState({...this.state, autoPlayEnabled: !this.state.autoPlayEnabled});
-                if (this.state.autoPlayEnabled)
+                if (newAutoPlayEnabled)
                   this.playBestMove();
                 }}
               style={{backgroundColor: this.state.autoPlayEnabled ? "#6e6" : "#e66"}}>
