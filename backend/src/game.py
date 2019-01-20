@@ -29,6 +29,23 @@ class Game:
         self.available_cells = (self.max - self.min) ** 2
 
     def possibilities(self, n):
+        # samples = min(4,self.available_cells)
+        # for _ in range(samples):
+        #     empty_tile = False
+            
+        #     while not empty_tile:
+        #         x = random.randint(0,3)
+        #         y = random.randint(0,3)
+        #         if self.cells[y][x] == 0:
+        #             self.cells[y][x] = n
+        #             self.available_cells -= 1
+        #             yield self
+        #             self.available_cells += 1
+        #             self.cells[y][x] = 0
+
+        #             empty_tile = True
+
+
         for y in range(self.min, self.max):
             for x in range(self.min, self.max):
                 if self.cells[y][x] == 0:

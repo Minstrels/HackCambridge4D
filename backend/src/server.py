@@ -40,9 +40,13 @@ def getState(action):
             game.addValue()
 
     game.checkGameOver()
-    move = expectiMax(game, 3, True)[1]
+    move, probabilities = expectiMax(game, 3, True)[1:3]
+    normalise_const = sum(probabilities.values())
+    print(probabilities)
+    probabilities = [probabilities['up']/normalise_const, probabilities['right']/normalise_const, probabilities['down']/normalise_const, probabilities['left']/normalise_const] 
 
-    return jsonify({'gameState': game.serialize(), 'direction': degs[move]})
+
+    return jsonify({'gameState': game.serialize(), 'direction': degs[move], 'moves': probabilities})
 
 
 if __name__ == '__main__':

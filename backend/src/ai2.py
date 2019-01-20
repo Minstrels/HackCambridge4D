@@ -9,14 +9,14 @@ def edgeHeuristic(game):
     return edgeSum
 
 def cornerHeuristic(game):
-    return (game.cells[0][0] + game.cells[3][0] + game.cells[0][3] + game.cells[3][3]) / 2
+    return max([game.cells[0][0], game.cells[3][0], game.cells[0][3], game.cells[3][3]])
 
 def emptySquares(game):
     emptySum = len([y for (y, x) in zip(range(4), range(4)) if game.cells[y][x] == 0])
     return emptySum
 
 def h(game):
-    return edgeHeuristic(game) + emptySquares(game)
+    return edgeHeuristic(game) + emptySquares(game) + cornerHeuristic(game)
 
 def expectiMax(game, depth, isPlayer):
     if depth == 0 or game.availableCells() == 0:
@@ -25,13 +25,15 @@ def expectiMax(game, depth, isPlayer):
     if isPlayer:
         maxValue = -1
         direction = 'down'
+        probabilities = {'up':0,'down':0,'left':0,'right':0}
         for newGame in game.possibleMoves():
             value = expectiMax(newGame[0], depth, not isPlayer)
+            probabilities[newGame[1]] = value
             maxValue = max(value,maxValue)
             if value == maxValue:
                 direction = newGame[1]
 
-        return maxValue,direction
+        return maxValue,direction,probabilities
 
     else:
         expectedValue = 0
@@ -52,14 +54,20 @@ def expectiMax(game, depth, isPlayer):
         if (n_evaluated == 0):
              return 0
         else:
-             return expectedValue / (2 * n_evaluated)
+             return expectedValue / ( n_evaluated)
 
 
 if __name__ == '__main__':
     g = Game()
-    g.cells = [[0, 0, 8, 0],
+    g.cells = [[16, 0, 8, 0],
                [2, 2, 0, 4],
                [0, 0, 8, 0],
-               [4, 2, 2, 4]]
-    maxval,direct = expectiMax(g,3,True)
+               [8, 2, 2, 4]]
+    g.cells = [[0, 0, 2, 0],
+               [0, 0, 0, 0],
+               [0, 0, 8, 0],
+               [8, 0, 0, 0]]
+    maxval,direct,probabilities = expectiMax(g,3,True)
+    
+    print(probabilities)
     print(direct)
