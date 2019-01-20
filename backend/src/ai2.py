@@ -1,3 +1,5 @@
+import random
+
 from game import *
 
 def expectiMax(game, depth, isPlayer):
@@ -18,12 +20,20 @@ def expectiMax(game, depth, isPlayer):
     else:
         expectedValue = 0
         size = game.availableCells()
-        for newGame in game.possibilities(2):
-            expectedValue += (1.0 / size) * 0.9 * expectiMax(newGame, depth - 1, not isPlayer)[0]
-        for newGame in game.possibilities(4):
-            expectedValue += (1.0 / size) * 0.1 * expectiMax(newGame, depth - 1, not isPlayer)[0]
+        n_evaluated = 0
 
-        return expectedValue
+        for newGame in game.possibilities(2):
+            if random.random() > 0.9 / (16 - size):
+                continue
+            n_evaluated += 1
+            expectedValue += 0.9 * expectiMax(newGame, depth - 1, not isPlayer)[0]
+        for newGame in game.possibilities(4):
+            if random.random() < 0.9 / (16 - size):
+                continue
+            n_evaluated += 1
+            expectedValue += 0.1 * expectiMax(newGame, depth - 1, not isPlayer)[0]
+
+        return  expectedValue / (2 * n_evaluated)
 
 
 if __name__ == '__main__':
