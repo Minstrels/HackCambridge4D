@@ -16,7 +16,7 @@ class Game:
         g = Game()
         g.cells = [row[:] for row in self.cells]
         g.score = self.score
-        g.available_cells = available_cells
+        g.available_cells = self.available_cells
         return g
 
     def equal(self, other):
