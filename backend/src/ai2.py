@@ -8,7 +8,7 @@ def expectiMax(game, depth, isPlayer):
 
     if isPlayer:
         maxValue = -1
-        direction = ''
+        direction = 'down'
         for newGame in game.possibleMoves():
             value = expectiMax(newGame[0], depth, not isPlayer)
             maxValue = max(value,maxValue)
@@ -33,7 +33,10 @@ def expectiMax(game, depth, isPlayer):
             n_evaluated += 1
             expectedValue += 0.1 * expectiMax(newGame, depth - 1, not isPlayer)[0]
 
-        return  expectedValue / (2 * n_evaluated)
+        if (n_evaluated == 0):
+             return 0
+        else:
+             return expectedValue / (2 * n_evaluated)
 
 
 if __name__ == '__main__':

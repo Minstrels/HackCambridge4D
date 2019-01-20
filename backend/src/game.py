@@ -120,8 +120,21 @@ class Game:
     def serialize(self):
         return {'squares': self.cells, 'score': self.score, 'game_over': self.game_over}
 
+    def noMerges(self):
+        for y in range(4):
+            for x in range(4):
+                if x < 3 and g.cells[y][x] == g.cells[y][x+1]:
+                    return False
+                if x > 0 and g.cells[y][x] == g.cells[y][x-1]:
+                    return False
+                if y < 3 and g.cells[y][x] == g.cells[y+1][x]:
+                    return False
+                if y > 0 and g.cells[y][x] == g.cells[y-1][x]:
+                    return False
+        return True
+
     def checkGameOver(self):
-        return self.availableCells == 0
+        return self.availableCells == 0 and self.noMerges()
 
 if __name__ == '__main__':
     g = Game()
