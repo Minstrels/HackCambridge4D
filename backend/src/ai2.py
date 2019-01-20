@@ -60,12 +60,12 @@ def expectiMax(game, depth, isPlayer):
         n_evaluated = 0
 
         for newGame in game.possibilities(2):
-            if random.random() > 0.9 / (16 - size * 4):
+            if random.random() > 0.9 / (16 - size):
                 continue
             n_evaluated += 1
             expectedValue += 0.9 * expectiMax(newGame, depth - 1, not isPlayer)[0]
         for newGame in game.possibilities(4):
-            if random.random() < 0.9 / (16 - size * 4):
+            if random.random() < 0.9 / (16 - size):
                 continue
             n_evaluated += 1
             expectedValue += 0.1 * expectiMax(newGame, depth - 1, not isPlayer)[0]
