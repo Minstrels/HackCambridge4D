@@ -15,20 +15,20 @@ def cornerHeuristic(game):
                           (game.cells[3][3], (3, 3)))
     corners = 0
     if maxSquare == (0, 0):
-        corners += (game.cells[0][1] + game.cells[1][0]) * 1.3
+        corners += (game.cells[0][1] + game.cells[1][0]) * 1.1
         corners += sum(game.cells[0]) + sum([game.cells[y][0] for y in range(4)]) / 3
     elif maxSquare == (3, 0):
-        corners += (game.cells[1][3] + game.cells[0][2]) * 1.3
+        corners += (game.cells[1][3] + game.cells[0][2]) * 1.1
         corners += sum(game.cells[0]) + sum([game.cells[y][3] for y in range(4)]) / 3
     elif maxSquare == (0, 3):
-        corners += (game.cells[3][1] + game.cells[2][0]) * 1.3
+        corners += (game.cells[3][1] + game.cells[2][0]) * 1.1
         corners += sum(game.cells[3]) + sum([game.cells[y][0] for y in range(4)]) / 3
     elif maxSquare == (3, 3):
-        corners += (game.cells[2][3] + game.cells[3][2]) * 1.3
+        corners += (game.cells[2][3] + game.cells[3][2]) * 1.1
         corners += sum(game.cells[3]) + sum([game.cells[y][3] for y in range(4)]) / 3
 
 
-    return maxV * 2 + corners / 3
+    return maxV * 3 + corners / 3
 
 def emptySquares(game):
     emptySum = len([y for (y, x) in zip(range(4), range(4)) if game.cells[y][x] == 0])
@@ -87,6 +87,6 @@ if __name__ == '__main__':
                [0, 0, 8, 0],
                [8, 0, 0, 0]]
     maxval,direct,probabilities = expectiMax(g,3,True)
-    
+
     print(probabilities)
     print(direct)
