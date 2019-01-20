@@ -13,16 +13,17 @@ degs = {'left': 270, 'up': 0, 'right': 90, 'down': 180}
 
 @app.route("/show")
 def showState():
-    return jsonify({'gameState': game.serialize(), 'direction': degs[move]})
+    return jsonify({'gameState': game.serialize()})
 
 @app.route("/play/<action>")
 def getState(action):
     global game
-    print(game.availableCells)
     if action == 'new':
         game = Game()
         game.newGame()
     else:
+        print(game.availableCells())
+
         game.checkGameOver()
         if game.game_over:
             return jsonify({'gameState': game.serialize()})
