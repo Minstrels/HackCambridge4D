@@ -14,7 +14,8 @@ class App extends Component {
       score: 0,
       cells: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],
       gameOver: false,
-      recommendedDirection: "Up"
+      recommendedDirection: "Up",
+      autoPlayEnabled: false
     };
   }
 
@@ -41,8 +42,12 @@ class App extends Component {
           score: jsonData.gameState.score,
           cells: jsonData.gameState.squares,
           gameOver: jsonData.gameState.game_over,
-          recommendedDirection: this.getDirectionString(jsonData.gameState.direction)
-        })
+          recommendedDirection: this.getDirectionString(jsonData.direction)
+        });
+
+        if (!jsonData.gameState.game_over && this.state.autoPlayEnabled) {
+          this.sendAction(this.getDirectionString(jsonData.direction).toLowerCase());
+        }
       });
   }
 
@@ -85,6 +90,9 @@ class App extends Component {
           <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <InfoPanel score={this.state.score} gameOver={this.state.gameOver} />
             <button className="button" onClick={() => this.sendAction("new")}>New Game</button>
+            <button className="button" onClick={() => this.setState({...this.state,
+              autoPlayEnabled: !this.state.autoPlayEnabled
+            })}>Toggle AutoPlay</button>
           </div>
         </div>
       </div>
