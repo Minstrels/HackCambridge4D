@@ -19,6 +19,18 @@ class App extends Component {
     };
   }
 
+  fixRecommendedDirections(moves) {
+    console.log(moves);
+    let nonZeroMoves = moves.filter((m) => m !== 0);
+
+    let max = Math.max.apply(null, nonZeroMoves);
+    let min = Math.min.apply(null, nonZeroMoves);
+
+    let newMoves = moves.map((m) => m === 0 ? 0 : 0.1 + 0.9*(((m-min)/(max-min))**2));
+    console.log(newMoves);
+    return newMoves;
+  }
+
   getBestMove(coeffs) {
     let maxIndex = -1;
     let maxVal = -1;
@@ -33,8 +45,8 @@ class App extends Component {
     return ["up", "right", "down", "left"][maxIndex];
   }
 
-  playBestMove() {
-    this.sendAction(this.getBestMove(this.state.recommendedDirections));
+  playBestMove(moves) {
+    this.sendAction(this.getBestMove(moves));
   }
 
   sendAction(action) {
@@ -45,11 +57,11 @@ class App extends Component {
           score: jsonData.gameState.score,
           cells: jsonData.gameState.squares,
           gameOver: jsonData.gameState.game_over,
-          recommendedDirections: jsonData.moves
+          recommendedDirections: this.fixRecommendedDirections(jsonData.moves)
         });
 
         if (!jsonData.gameState.game_over && this.state.autoPlayEnabled) {
-          this.playBestMove();
+          this.playBestMove(jsonData.moves);
         }
       });
   }
@@ -101,7 +113,7 @@ class App extends Component {
                 let newAutoPlayEnabled = !this.state.autoPlayEnabled;
                 this.setState({...this.state, autoPlayEnabled: !this.state.autoPlayEnabled});
                 if (newAutoPlayEnabled)
-                  this.playBestMove();
+                  this.playBestMove(this.state.recommendedDirections);
                 }}
               style={{backgroundColor: this.state.autoPlayEnabled ? "#6e6" : "#e66"}}>
               Toggle AutoPlay
