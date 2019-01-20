@@ -11,7 +11,7 @@ game = None
 
 degs = {'left': 270, 'up': 0, 'right': 90, 'down': 180}
 
-@app.route("/play")
+@app.route("/show")
 def showState():
     return jsonify({'gameState': game.serialize(), 'direction': degs[move]})
 

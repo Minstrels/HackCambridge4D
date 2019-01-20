@@ -17,8 +17,7 @@ def expectiMax(game, depth, isPlayer):
 
     else:
         expectedValue = 0
-        availableCells = game.availableCells()
-        size = availableCells
+        size = game.availableCells()
         for newGame in game.possibilities(2):
             expectedValue += (1.0 / size) * 0.9 * expectiMax(newGame, depth - 1, not isPlayer)[0]
         for newGame in game.possibilities(4):
