@@ -21,7 +21,7 @@ class App extends Component {
 
   getBestMove(coeffs) {
     let maxIndex = -1;
-    let maxVal = 0;
+    let maxVal = -1;
 
     for (let i = 0; i < coeffs.length; ++i) {
       if (coeffs[i] > maxVal) {
@@ -88,7 +88,7 @@ class App extends Component {
         </div>
 
         <div className="App-main-panels">
-          <HintPanel recommendedDirections={this.state.recommendedDirections} />
+          <HintPanel recommendedDirections={this.state.recommendedDirections} bestMove={this.getBestMove(this.state.recommendedDirections)} />
           <Grid cells={this.state.cells} cellSize={"14vh"} />
           <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <InfoPanel score={this.state.score} gameOver={this.state.gameOver} />

@@ -1,16 +1,26 @@
 .HintPanel {
   display: flex;
+  flex-direction: row;
+
+  justify-content: space-around;
+  align-items: center;
+
+  width: 20vw;
+
+  border: 5px solid black;
+
+  margin-bottom: 94px;
+}
+
+.HintPanel-arrows {
+  display: flex;
   flex-direction: column;
 
   justify-content: center;
   align-items: center;
 
-  width: 20vw;
-  height: 20vh;
-
-  border: 5px solid black;
-
-  margin-bottom: 94px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .HintPanel-row {
@@ -23,5 +33,10 @@
 
 .HintPanel-label {
   font-size: 46px;
+  font-weight: bold;
+}
+
+.HintPanel-best-move-label {
+  font-size: 36px;
   font-weight: bold;
 }
