@@ -92,7 +92,7 @@ class App extends Component {
             <button className="button" onClick={() => this.sendAction("new")}>New Game</button>
             <button className="button" onClick={() => this.setState({...this.state,
               autoPlayEnabled: !this.state.autoPlayEnabled
-            })}>Toggle AutoPlay</button>
+            })} style={{backgroundColor: this.state.autoPlayEnabled ? "#6e6" : "#e66"}}>Toggle AutoPlay</button>
           </div>
         </div>
       </div>
