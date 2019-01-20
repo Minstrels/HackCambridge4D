@@ -16,6 +16,7 @@ class Game:
         g = Game()
         g.cells = [row[:] for row in self.cells]
         g.score = self.score
+        g.available_cells = available_cells
         return g
 
     def equal(self, other):
@@ -25,6 +26,7 @@ class Game:
         # Initialise the game state
         self.addValue()
         self.addValue()
+        self.available_cells = (self.max - self.min) ** 2
 
     def possibilities(self, n):
         for y in range(self.min, self.max):
