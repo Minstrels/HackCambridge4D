@@ -90,9 +90,12 @@ class App extends Component {
           <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <InfoPanel score={this.state.score} gameOver={this.state.gameOver} />
             <button className="button" onClick={() => this.sendAction("new")}>New Game</button>
-            <button className="button" onClick={() => this.setState({...this.state,
-              autoPlayEnabled: !this.state.autoPlayEnabled
-            })} style={{backgroundColor: this.state.autoPlayEnabled ? "#6e6" : "#e66"}}>Toggle AutoPlay</button>
+            <button className="button" 
+              onClick={() => {this.setState({...this.state, autoPlayEnabled: !this.state.autoPlayEnabled}); 
+                              this.sendAction(this.getDirectionString(this.state.recommendedDirection))}} 
+              style={{backgroundColor: this.state.autoPlayEnabled ? "#6e6" : "#e66"}}>
+              Toggle AutoPlay
+            </button>
           </div>
         </div>
       </div>
